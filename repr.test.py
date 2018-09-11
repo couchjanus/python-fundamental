@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# def.test.py
+# repr.test.py
 
 def menu():
     print("Select operation.")
@@ -27,8 +27,11 @@ while running:
     operator = menu()
 
     if operator == 'q':
-        print('Thankyou for using calculator.py!')
+        print('{!r}'.format('Thankyou for using calculator.py!'))
+        print('{!s}'.format('Thankyou for using calculator.py!'))
+        print('{!a}'.format('Thankyou for using calculator.py!'))
         break
     elif operator not in ('+','-','*','/','//','%','**'):
         calcHelp()
         continue
+
