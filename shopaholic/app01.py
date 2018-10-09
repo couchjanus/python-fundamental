@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
-# app.py
+# app01.py
+
+from __future__ import print_function
+
+import os
 
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from PIL import Image 
 
 class Application(Frame):
 
@@ -19,10 +24,12 @@ class Application(Frame):
 
     def init_widgets(self):
         self.init_menu()
+        self.init_toolbar()
         self.init_status_bar()
         self.init_window()
 
     def init_menu(self):
+    
         menuMain = Menu(self)
         mFile = Menu(menuMain, tearoff=0, bd = 1)
         mTools = Menu(menuMain, tearoff=0, bd = 1)
@@ -34,11 +41,32 @@ class Application(Frame):
         
         mFile.add_command(label="Exit", command=self.on_exit)
         mAbout.add_command(label="About", command=self.on_about)
+
         self.master.config(menu=menuMain)
 
+    
+    def init_toolbar(self):
+
+        toolbar = Frame(self, bd=1, relief=RAISED)
+
+        img_exit = PhotoImage(file=os.path.join('icons', 'exit.png'))
+        img_info = PhotoImage(file=os.path.join('icons', 'info.png'))
+
+        exitButton = Button(toolbar,width=20, image=img_exit, relief=FLAT, command=self.on_exit)
+        infoButton = Button(toolbar,width=20, image=img_info, relief=FLAT, command=self.on_about)
+        
+        exitButton.image = img_exit
+        infoButton.image = img_info
+
+        exitButton.pack(side=LEFT, padx=2, pady=2)
+        infoButton.pack(side=LEFT, padx=2, pady=2)
+
+        toolbar.pack(side=TOP, fill=X)
+        
+
     def init_status_bar(self):
+
         self.status = Label(self.master, textvariable=self.status_bar_text, bd=1, relief=SUNKEN, anchor=W)
-        self.status_bar_text.set('Shopaholic status') 
         self.status.pack(side=BOTTOM, fill=X)
     
     
@@ -48,7 +76,7 @@ class Application(Frame):
         left_widgets = Frame(self,)
         self.tree_products = LabelFrame(left_widgets,text='Products',)
         self.tree_products.pack(fill=BOTH, expand=1)
-        self.combo_label_frame = LabelFrame(left_widgets,)
+        self.combo_label_frame = LabelFrame(left_widgets,) # родительсикй виджет
         self.cbFilters =  ttk.Combobox(self.combo_label_frame)
         self.cbFilters.pack(side=TOP, anchor=W, fill=X, expand=YES)
         self.combo_label_frame.pack(side=TOP, anchor=W, fill=X, expand=0)
@@ -72,6 +100,7 @@ class Application(Frame):
 
     def on_double_click(self):
         pass
+
 
 def main():
     root = Tk()
