@@ -72,3 +72,52 @@ class Widgets(object):
 
         return obj
 
+    def get_panel_frame(self, container):
+        return Frame(container, bd=1, padx = 5, pady = 5)
+
+    
+    def get_listbox(self, container,):
+
+        sb = Scrollbar(container,orient=VERTICAL)
+        obj = Listbox(container,relief=GROOVE,selectmode=BROWSE,yscrollcommand=sb.set,)
+        sb.config(command=obj.yview)
+     
+        obj.pack(side=LEFT,fill=BOTH, expand =1) 
+        sb.pack(fill=Y, expand=1)
+
+        return obj
+
+    def get_add_edit_cancel(self, caller, container):
+    
+        bts = self.get_buttons_label_frame(container)
+
+        caller.btnAdd = self.get_button(bts, "Add")
+        caller.btnAdd.bind("<Return>", caller.on_add)
+        caller.btnAdd.bind("<Button-1>", caller.on_add)
+        caller.btnEdit = self.get_button(bts, "Edit")
+        caller.btnEdit.bind("<Button-1>", caller.on_edit)
+        caller.btCancel = self.get_button(bts, "Close")
+        caller.btCancel.bind("<Button-1>", caller.on_cancel)
+
+        bts.pack(side=RIGHT, fill=Y, expand=0)
+
+        return bts
+
+    def get_save_cancel(self, caller, container):
+    
+        bts = self.get_buttons_label_frame(container)
+        bts.grid(row = 0, column = 2, sticky=N+W+S+E)
+       
+        caller.btnSave = self.get_button(bts, "Save",0,2)
+        caller.btnSave.bind("<Button-1>", caller.on_save)
+        caller.btnSave.bind("<Return>", caller.on_save)
+    
+        caller.btCancel = self.get_button(bts, "Close", 1,2)
+        caller.btCancel.bind("<Button-1>", caller.on_cancel)
+
+        return bts
+
+
+
+
+

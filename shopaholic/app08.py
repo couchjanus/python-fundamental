@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# app05.py
+# app08.py
 
 from __future__ import print_function
 
@@ -12,8 +12,9 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image 
 
-from .engine05 import Engine
-from .categories03 import Dialog
+from .engine import Engine
+from .categories import Dialog
+from .product02 import Product
 
 class Application(Frame):
 
@@ -145,8 +146,10 @@ class Application(Frame):
         else:self.tree_products['text'] = 'Products 0'
 
     
-    def on_add(self):
-        pass
+    def on_add(self, evt):
+        obj = Product(self,self.engine)
+        obj.transient(self)
+        obj.on_open()
 
     def on_categories(self):
         obj = Dialog(self,self.engine)

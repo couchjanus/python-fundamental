@@ -4,6 +4,8 @@
 from __future__ import print_function
 
 import os
+import _thread
+import datetime
 
 from tkinter import *
 from tkinter import ttk
@@ -11,6 +13,7 @@ from tkinter import messagebox
 from PIL import Image 
 
 from .engine06 import Engine
+from .categories04 import Dialog
 
 class Application(Frame):
 
@@ -50,6 +53,7 @@ class Application(Frame):
         menuMain.add_cascade(label="Tools", menu=mTools)
         menuMain.add_cascade(label="?", menu=mAbout)
         mFile.add_command(label="Exit", command=self.on_exit)
+        mTools.add_command(label="Categories", command=self.on_categories)
         mAbout.add_command(label="About", command=self.on_about)
 
         self.master.config(menu=menuMain)
@@ -116,11 +120,38 @@ class Application(Frame):
         buttons_label_frame.pack(side=RIGHT, fill=Y, expand=0)
 
 
-    def on_open(self):
-        self.combo_label_frame['text'] = 'Categories'
+    def on_open(self, evt=None):
+    
+        _thread.start_new_thread(self.update_status_bar,())
 
+        self.selected_product = None
+        self.cbFilters.set('')
+        self.combo_label_frame['text'] = 'Categories'
+        sql = "SELECT * FROM products ORDER BY product DESC"
+        self.set_tree_values(sql,())
+        self.set_combo_values()
+
+    def set_tree_values(self, sql, args):
+    
+        for i in self.lstProducts.get_children():
+            self.lstProducts.delete(i)
+
+        rs  = self.engine.read(True, sql, args)
+
+        if rs:
+            self.tree_products['text'] = 'Products %s'%len(rs)
+            for i in rs:
+                self.lstProducts.insert('', 0, text=i[0],values=(i[1],i[4],i[6],i[5]))
+        else:self.tree_products['text'] = 'Products 0'
+
+    
     def on_add(self):
         pass
+
+    def on_categories(self):
+        obj = Dialog(self,self.engine)
+        obj.transient(self)
+        obj.on_open()
                    
     def on_about(self,):
         messagebox.showinfo(self.engine.title, self.engine.about)   
@@ -135,8 +166,11 @@ class Application(Frame):
     def on_double_click(self):
         pass
 
+
     def get_selected_product(self, evt):
-        pass
+        
+        pk = int(self.lstProducts.item(self.lstProducts.focus())['text'])
+        self.selected_product = self.engine.get_selected('products','product_id', pk)
 
     def set_combo_values(self):
 
@@ -149,6 +183,15 @@ class Application(Frame):
 
     def get_selected_combo_item(self, evt):
         pass
+
+    def update_status_bar(self):
+        
+        while True:
+            s = "Astral date: "
+            t = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            msg = s+t
+            self.status_bar_text.set(msg)        
+        
 
 def main():
     engine = Engine()

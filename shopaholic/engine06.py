@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-# engine05.py
+# engine06.py
 
+from .dbms06 import DBMS
 from .widgets06 import Widgets
 
-class Engine(Widgets):
+class Engine(DBMS, Widgets):
     def __init__(self):
         super(Engine, self).__init__()
         self.title = "Shopaholic"
@@ -12,3 +13,6 @@ class Engine(Widgets):
         s = "%s ver %s\nwritten by\nCouch Janus \nMilky Way Galaxy\nSolar System\nThird planet(Earth) \nNAU Ukraine(Kyiv)\ncouchjanus@gmail.com\n%s"
         msg = (s % (self.title,self.version,platform))
         self.about = msg
+
+    def __str__(self):
+        return "class: %s" % (self.__class__.__name__, )

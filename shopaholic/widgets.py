@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# widgets05.py
+# widgets.py
 
 from tkinter import *
 from tkinter import ttk  
@@ -22,7 +22,6 @@ class Widgets(object):
         
         return obj
 
-
     def get_radio_buttons(self, container,text, ops, v, callback=None):
 
         obj = LabelFrame(container, borderwidth=1, text = text)
@@ -42,7 +41,6 @@ class Widgets(object):
         obj.pack(fill=X, expand=0)            
 
         return obj            
-
 
     def get_buttons_label_frame(self, container):
         return LabelFrame(container, bd=1 ,padx=5, pady=5, relief=GROOVE)
@@ -75,6 +73,8 @@ class Widgets(object):
     def get_panel_frame(self, container):
         return Frame(container, bd=1, padx = 5, pady = 5)
 
+    def get_panel_label_frame(self, container,text):
+        return LabelFrame(container,text=text, bd=1, padx = 5, pady = 5)
     
     def get_listbox(self, container,):
 
