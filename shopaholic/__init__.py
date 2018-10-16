@@ -1,7 +1,7 @@
 # __all__ = ['app']
 
-from .app01 import *
-# from .app02 import *
+# from .app01 import *
+from .app02 import *
 # from .app03 import *
 # from .app04 import *
 # from .app05 import *

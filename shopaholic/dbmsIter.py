@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# dbms.py
+# dbmsIter.py
 
 import sqlite3 as lite
 import os
@@ -36,7 +36,8 @@ class DBMS(object):
             conn.commit()
             
             if fetch == True:
-                rs =  cursor.fetchall()
+                rs =  self.ResultIter(cursor)
+                # rs =  cursor.fetchall()
             else:
                 rs =  cursor.fetchone()
             

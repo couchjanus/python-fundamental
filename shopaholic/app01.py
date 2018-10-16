@@ -12,7 +12,10 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image 
 
-from .engine01 import Engine
+from .engine import Engine
+from .categories import Dialog
+from .brands import Brands
+from .product import Product
 
 class Application(Frame):
 
@@ -52,6 +55,8 @@ class Application(Frame):
         menuMain.add_cascade(label="Tools", menu=mTools)
         menuMain.add_cascade(label="?", menu=mAbout)
         mFile.add_command(label="Exit", command=self.on_exit)
+        mTools.add_command(label="Categories", command=self.on_categories)
+        mTools.add_command(label="Brands", command=self.on_brands)
         mAbout.add_command(label="About", command=self.on_about)
 
         self.master.config(menu=menuMain)
@@ -120,7 +125,7 @@ class Application(Frame):
 
     def on_open(self, evt=None):
     
-        _thread.start_new_thread(self.update_status_bar,())
+        # _thread.start_new_thread(self.update_status_bar,())
 
         self.selected_product = None
         self.cbFilters.set('')
@@ -143,8 +148,21 @@ class Application(Frame):
         else:self.tree_products['text'] = 'Products 0'
 
     
-    def on_add(self):
-        pass
+    def on_add(self, evt):
+        obj = Product(self, self.engine)
+        obj.transient(self)
+        obj.on_open()
+
+    def on_categories(self):
+        obj = Dialog(self,self.engine)
+        obj.transient(self)
+        obj.on_open()
+
+    def on_brands(self):
+    
+        obj = Brands(self,self.engine)
+        obj.transient(self)
+        obj.on_open()
                    
     def on_about(self,):
         messagebox.showinfo(self.engine.title, self.engine.about)   
@@ -153,15 +171,24 @@ class Application(Frame):
         if messagebox.askokcancel(self.engine.title, "Do you want to quit?"):
             self.master.destroy()
 
-    def on_edit(self):
-        pass
+    def on_edit(self, evt):
+        if self.selected_product is not None:
+            obj = Product(self,self.engine)
+            obj.transient(self)
+            obj.on_open(self.selected_product)
+        else:
+            msg = "Please select an item."
+            messagebox.showwarning(self.engine.title,msg)
 
     def on_double_click(self):
         pass
 
+
     def get_selected_product(self, evt):
-        pass
-    
+        
+        pk = int(self.lstProducts.item(self.lstProducts.focus())['text'])
+        self.selected_product = self.engine.get_selected('products','product_id', pk)
+
     def set_combo_values(self):
 
         self.dict_combo_values={}
