@@ -8,7 +8,7 @@ def index(request):
     """
 
 
-    # Генерация "количества" categories
+    # количество categories
     count_categories=Category.objects.all().count()
 
     # Render the HTML template index.html with the data in the context variable.

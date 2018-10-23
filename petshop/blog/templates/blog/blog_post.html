@@ -1,0 +1,11 @@
+<!-- blog/templates/blog/blog_post.html -->
+{% extends "layouts/blog.html" %}
+{% block title %}My blog{% endblock %}
+{% block content %}
+    <h1>Blog page</h1>
+    <div class="post">
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.text }}</p>
+    </div>
+
+{% endblock %}

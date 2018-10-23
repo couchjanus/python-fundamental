@@ -1,0 +1,19 @@
+<!-- blog/templates/blog/index.html -->
+{% extends "layouts/blog.html" %}
+{% block title %}My blog{% endblock %}
+{% block content %}
+    <h1>Blog page</h1>
+  {% if posts %}
+    Number of posts: {{ posts|length }}
+    {% for post in posts %}
+        <h2>{{ post.title }}</h2>
+        <strong>Published At: {{ post.pub_date }}</strong>
+        <a href="{% url 'post_detail' post.pk %}"><button>Read More</button></a>
+
+    {% endfor %}
+
+  {% else %}
+    No posts.
+  {% endif %}
+
+{% endblock %}
