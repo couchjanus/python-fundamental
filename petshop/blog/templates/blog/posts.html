@@ -1,0 +1,16 @@
+<!-- blog/templates/blog/posts.html -->
+{% extends "layouts/blog.html" %}
+{% block title %}My blog{% endblock %}
+{% block content %}
+
+{% if popular_list %}
+<ul class="list-group">
+<li class="list-group-item active"><strong>Popular posts за неделю</strong></li>
+{% for post in popular_list %}
+    <li class="list-group-item">
+    <a href="{% url 'post_detail' post.id %}">{{ post.post__title }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

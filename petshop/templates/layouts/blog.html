@@ -3,6 +3,7 @@
 {% block title %}My blog{% endblock %}
 
 {% block style %}
+{% load blog_filters_tags %}
 {% load staticfiles %}
 <!-- Custom styles for this template -->
 <link href="{% static 'blog/blog.css' %}" rel="stylesheet">
@@ -24,6 +25,10 @@
   <div class="p-3 mb-3 bg-light rounded">
     <h4 class="font-italic">About</h4>
     <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+  </div>
+  <div class="p-3 mb-3 bg-light rounded">
+    <h4>Recent posts ({% total_posts %})</h4>
+    {% get_recent_posts_for_week 3 %}
   </div>
 </aside><!-- /.blog-sidebar -->
 {% endblock %}

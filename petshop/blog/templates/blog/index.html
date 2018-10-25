@@ -12,8 +12,27 @@
 
     {% endfor %}
 
+
+    {% for post in posts %}
+        <h2>{{ forloop.counter }} {{ post.title|title }}</h2>
+        <strong>Published At: {{ post.pub_date }}</strong>
+        <div class="{% cycle 'row-cyan' 'row-cornsilk' %}"> {{ post.text|truncatewords_html:12 }} <a href="{% url 'post_detail' post.pk %}">Read More</a></div>
+        
+    {% empty %}
+        <li>Sorry, no posts in this list.</li>
+    {% endfor %}
+
+
+    {% for post in posts reversed %}
+        <h2>{{ post.title }}</h2>
+        <strong>Published At: {{ post.pub_date }}</strong>
+        <a href="{% url 'post_detail' post.pk %}"><button>Read More</button></a>
+
+    {% endfor %}
+
   {% else %}
     No posts.
   {% endif %}
 
 {% endblock %}
+
