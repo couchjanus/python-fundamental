@@ -1,0 +1,16 @@
+<!-- templates/auth.html -->
+{% extends "layouts/main.html" %}
+{% block title %}Simple is Better Than Complex{% endblock %}
+
+{% block style %}
+
+{% load staticfiles %}
+<!-- Custom styles for this template -->
+<link href="{% static 'auth/style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block page %}
+  {% block content %}
+
+  {% endblock %}
+{% endblock %}

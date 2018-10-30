@@ -14,23 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls import include, url
 from django.views.generic import RedirectView
+from django.contrib.auth import views as core_views
+from site_auth import views as auth_views
+
+from site_auth.forms import LoginForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    url(r'^signup/$', auth_views.signup, name='signup'),
+    url(r'^home/$', auth_views.home, name='home'),
+
+    # re_path('login/', core_views.LoginView.as_view(template_name= 'login.html'), name='login'),
+
+    url(r'^login/$', core_views.LoginView.as_view(template_name='login.html', authentication_form = LoginForm), name='login'),  
+    
+    url(r'^logout/$', core_views.LogoutView.as_view(next_page='login'), name='logout'),
+
     path('', include('pages.urls')),
-]
-
-urlpatterns += [
     url(r'^products/', include('products.urls')),
-]
-
-urlpatterns += [
     url(r'^blog/', include('blog.urls')),
 ]
 
-# urlpatterns += [
-#     url(r'^$', RedirectView.as_view(url='/products/', permanent=True)),
-# ]
+
