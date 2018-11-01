@@ -1,16 +1,16 @@
-<!-- blog/templates/blog/index.html -->
+<!-- blog/templates/blog/post_list.html -->
 {% extends "layouts/blog.html" %}
 {% block title %}My blog{% endblock %}
 {% block content %}
     <h1>Blog page</h1>
-  {% if posts %}
-    Number of posts: {{ posts|length }}
+  {% if object_list %}
+    Number of posts: {{ object_list|length }}
   {% endif %}
   
-    {% for post in posts %}
+    {% for post in object_list %}
         <h2>{{ post.title|title }}</h2>
         Published At: <strong>{{ post.pub_date }}</strong> Author: <strong>{{ post.creator.username }}</strong>
-        <div class="{% cycle 'row-cyan' 'row-cornsilk' %}"> {{ post.text|truncatewords_html:12 }} <a href="{% url 'post_detail' post.id %}">Read More</a></div>
+        <div class="{% cycle 'row-cyan' 'row-cornsilk' %}"> {{ post.text|truncatewords_html:12 }} <a href="{% url 'post_detail' post.pk %}">Read More</a></div>
         
     {% empty %}
         <li>Sorry, no posts in this list.</li>
