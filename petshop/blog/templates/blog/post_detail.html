@@ -6,6 +6,7 @@
     Published At: <strong>{{ object.pub_date }}</strong> Author: <strong>{{ object.creator.username }}</strong>
     <div class=""> 
         {{ object.text }} 
+        <img src="/media/{{ object.picture }}">
         <a href="{{request.META.HTTP_REFERER}}">Go back</a>
     </div>
 
