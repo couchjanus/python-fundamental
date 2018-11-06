@@ -6,11 +6,19 @@
   {% if posts %}
     Number of posts: {{ posts|length }}
   {% endif %}
+
+    <ul>
+        {% for tag in tags %}
+        <li><a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a></li>
+        {% empty %}
+        <li>No Tags</li>
+        {% endfor %}
+    </ul>
   
     {% for post in posts %}
         <h2>{{ post.title|title }}</h2>
         Published At: <strong>{{ post.pub_date }}</strong> Author: <strong>{{ post.creator.username }}</strong>
-        <div class="{% cycle 'row-cyan' 'row-cornsilk' %}"> {{ post.text|truncatewords_html:12 }} <a href="{% url 'post_detail' post.id %}">Read More</a></div>
+        <div class="{% cycle 'row-cyan' 'row-cornsilk' %}"> {{ post.text|truncatewords_html:12 }} <a href="{% url 'post_detail' post.slug %}">Read More</a></div>
         
     {% empty %}
         <li>Sorry, no posts in this list.</li>

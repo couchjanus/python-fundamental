@@ -28,7 +28,7 @@ def get_recent_posts_for_week(count=5):
         pub_date__range=[timezone.now() - timezone.timedelta(7), timezone.now()]
     ).values(
         # Забираем интересующие нас поля, а именно id и заголовок
-        'id', 'title',
+        'id', 'slug', 'title',
     ).order_by(
         # отсортируем записи по убыванию
         '-pub_date')[:count]    # Заберём последние :count записей

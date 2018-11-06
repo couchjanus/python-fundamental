@@ -1,7 +1,7 @@
 <ul>
     {% for post in recent %}
         <li>
-            <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+            <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
         </li>
     {% endfor %}
 </ul>

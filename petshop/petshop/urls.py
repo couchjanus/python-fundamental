@@ -20,6 +20,9 @@ from django.views.generic import RedirectView
 from django.contrib.auth import views as core_views
 from site_auth import views as auth_views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.views.generic import TemplateView
 
 from site_auth.forms import LoginForm
@@ -39,10 +42,10 @@ urlpatterns = [
     url(r'^about/', TemplateView.as_view(template_name="about.html")),
 
     # url(r'^about/', AboutPageView.as_view()),
-    # url(r'^$', HomePageView.as_view()),
+    url(r'^$', HomePageView.as_view()),
 
     url(r'^products/', include('products.urls')),
     url(r'^blog/', include('blog.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -10,20 +10,29 @@ from .models import Post, PostStatistic
 
 from .forms import CommentForm
 
+from taggit.models import Tag
+
+class TagMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super(TagMixin, self).get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()
+        return context
+
 class PostListView(ListView):
     # template_name = 'blog/index.html'
     # model = Post
+    # paginate_by = '10'
     queryset = Post.objects.order_by('-pub_date')
 
-    # context_object_name = 'posts'
+class TagIndexView(TagMixin, ListView):
+    template_name = 'blog/index.html'
+    model = Post
+    paginate_by = '10'
+    context_object_name = 'posts'
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(object_list=object_list, **kwargs)
-    #     context['posts'] = json.dumps([
-    #         post.to_dict(self.request.user)
-    #         for post in context['posts']
-    #     ])
-    #     return context
+    def get_queryset(self, *args, **kwargs):
+        return Post.objects.filter(tags__slug=self.kwargs.get('slug'))
+
 
 class AuthorDetail(DetailView):
     
